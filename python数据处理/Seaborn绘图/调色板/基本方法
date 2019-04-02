@@ -1,0 +1,5 @@
+color_palette()能传入任何Matplotlib所支持的颜色
+color_palette()不写参数则默认颜色
+set_palette()设置所有图的颜色
+
+hls_palette()函数来控制颜色的亮度和饱和，其中的参数 l（表示亮度lightness），s（表示饱和saturation）
