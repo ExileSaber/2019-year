@@ -1,0 +1,13 @@
+PyMongo官方文档： http://api.mongodb.com/python/current/api/pymongo/collection.html
+对数据库和集合本身等的一系列操作： http://api.mongodb.com/python/current/api/pymongo/
+
+一些比较常用的操作举例：
+1.组合方法：
+    find_one_and_delete()  查找后删除
+    find_one_and_replace()  查找后替换
+    find_one_and_update()  查找后更新
+
+2.对索引进行操作：
+    create_index()
+    create_indexes()
+    drop_index()等
