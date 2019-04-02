@@ -1,0 +1,18 @@
+JavaS动态渲染除了Ajex还有其他的方法
+爬取其他动态渲染的方法需要模拟浏览器运行
+
+
+
+Selenium支持非常多浏览器
+如Chrome，Firefox，Edge等，还有Android，BlackBerry等手机浏览器
+另外也支持无界面浏览器PhantomJS
+
+初始化方法简单：
+from selenium import webdriver
+
+browser = webdriver.Chrome()
+browser = webdriver.Firefox()
+browser = webdriver.Edge()
+browser = webdriver.PhantomJS()
+browser = webdriver.Safari()
+#这样就完成了浏览器对象的初始化并将其赋值为browser对象，接下来就是调用browser对象，让其执行各个动作以模拟浏览器操作

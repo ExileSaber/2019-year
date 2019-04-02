@@ -1,0 +1,24 @@
+说明:当爬取任务量非常大，任务非常多时。可以搭建一个负载均衡器来把压力分散到各个服务器上。
+
+
+一. 配置Splash服务
+    首先要有多个Splash服务，假如这里有四台远程主机的8050端口上都开启了Splash服务，这四个服务完全一致，都是通过Docker和Splash镜像开启的，访问其中任意一个服务时，都可以使用Splash服务
+
+
+二. 配置负载均衡
+    可以任意选择一台带有公网IP的主机来配置负载均衡。首先装好Nginx，然后修改Nginx的配置文件nginx.conf，添加如下内容：
+http{
+    upstream splash{     # 通过upstream字段定义了一个名字叫做splash的服务集群配置。其中least_conn代表减少链接负载均衡，它适合处理时间长短不一造成服务器过载的情况
+        least_conn;      # 不设置则每个服务器压力相同，适合服务器配置相当，无状态且短平快的服务使用
+        server localhost1:8050;
+        server localhost2:8050;
+        server localhost3:8050;
+        server localhost4:8050;
+    }
+    server{
+        listen 8050:
+        location / {
+            proxy_pass http://splash;
+        }
+    }
+}

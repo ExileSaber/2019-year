@@ -1,0 +1,76 @@
+1. args 属性：
+        可以获取加载时配置的参数，比如URL，如果是GET请求，它还可以获取GET请求参数
+        如果是POST请求，它可以获取表单提交的数据（支持第二个参数直接使用args）
+
+function main(splash, args)
+    local url = args.url
+end
+
+第二个参数args就相当于splash.args属性，以上代码就等价于：
+function main(splash)
+    local url = splash.args.url
+end
+
+
+
+2. js_enabled 属性：
+        这个属性时splash的JavaScript执行开关，可以将其配置为true或false来控制是否执行JavaScript代码，默认为true
+        例如，这里禁止执行JavaScript代码。
+
+function main(splash, args)
+    splash:go("https://www.baidu.com")
+    splash.js_enabled = false
+    local title = splash:evaljs("document.title")
+    return {title=title}
+end
+
+# 通过evaljs方法传入一个JavaScript脚本，document.title结果为返回网页标题
+# 将js_enabled设为false，不能再执行JavaScript
+
+
+
+3. resource_timeout属性：
+        此属性可以设置加载的超时时间，单位是秒，如果设置为0或者nil（类似于python中的None），代表不检测超时
+
+function main(splash)
+    splash.resource_timeout = 0.1
+    assert(splash:go('https://www.taobao.com'))
+    return splash:png()
+end
+
+# 将超时时间设为0.1s，超过0.1s没有得到相应就会抛出异常
+
+
+
+4.image_enabled属性：
+        可以设置图片是否加载，默认情况下时加载的。禁用后，可以节省网络流量并提高网页加载速度。
+        注意：禁用图片加载可能影响JavaScript渲染（影响了外层DOM节点高度，进而影响DOM节点的位置）
+
+function main(splash, args)
+    splash.image_enabled = false
+    assert(splash:go('https://www.jd.com'))
+    return {png=splash.png()}
+end
+
+
+
+5. plugins_enabled属性：
+        此属性可以控制浏览器插件（如Flash插件）是否开启。默认情况下，此属性时false，表示不开启
+
+splash.plugins_enabled = true/false
+
+
+
+6. scroll_position属性：
+        通过设置此属性，我们可以控制页面上下或者左右滚动
+
+function main(splash, args)
+    assert(splash:go('https://www.taobao.com'))
+    splash.scroll_position = {y=400}
+    return {png=splash:png()}
+end
+
+# 控制页面向下滚动400像素值
+    splash.scroll_position = {x=100, y=200}
+
+

@@ -1,0 +1,10 @@
+function main(splash, args)
+    splash:go("http://www.baidu.com")
+    splash:wait(0.5)
+    local title = splash:evaljs("document.title")
+    return {title=title}
+end
+
+# 通过evaljs方法传入一个JavaScript脚本，document.title结果为返回网页标题
+# 返回值还可以为字符串类型
+# 将代码拷贝到splash上面再点击render me

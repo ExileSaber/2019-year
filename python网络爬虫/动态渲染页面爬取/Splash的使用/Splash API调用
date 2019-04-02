@@ -1,0 +1,41 @@
+Splash提供了一些HTTP API接口，我们只需要请求这些接口并传递相应的参数即可
+电脑splash端口为 192:168:99:100
+
+
+1. render.html
+    此接口用于获取JavaScript渲染的页面的HTML代码，接口地址就是Splash的运行地址加此接口名称，例如:http://192:168:99:100:8050/render.html
+
+用python实现:
+
+import requests
+url = 'http://192.168.99.100:8050/render.html?url=https://www.baidu.com&wait=5'
+response = requests.get(url)
+print(response.text)
+
+还支持代理设置，图片加载设置，headers设置，请求方法设置
+具体用法参考官方文档
+
+
+
+2. render.png
+    此接口可以获取网页截图，其参数比render.html多了几个，比如通过width和height来控制宽高，它返回的是PNG格式的图片二进制数据。
+
+import requests
+url = 'http://192.168.99.100:8050/render.png?url=http://www.taobao.com&wait=5&width=1000&height=700'
+response = requests.get(url)
+with open('taobao.png', 'wb') as f:
+    f.write(response.content)
+
+详细的参数设置参考官方文档
+
+
+
+3. render.jpeg
+    该接口和render.png类似，返回类型为JPEG格式的图片的二进制数据，多一个参数 quality
+
+
+
+4. render.har
+    用于获取网页加载的HAR数据
+
+curl http://192.168.99.100:8050/render.har?url=https://www.jd.com&wait=5
